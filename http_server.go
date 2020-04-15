@@ -12,6 +12,8 @@ import (
 	"net/url"
 )
 
+var lj = &LoginJSON{}
+
 // StartServer 启动 http 服务
 func StartServer(port string) {
 	templateFilesBox = rice.MustFindBox("http-files/template")
@@ -24,8 +26,9 @@ func StartServer(port string) {
 	http.HandleFunc("/cgi-bin/baidu/login", execBaiduLogin)
 	http.HandleFunc("/cgi-bin/baidu/sendcode", sendCode)
 	http.HandleFunc("/cgi-bin/baidu/verifylogin", execVerify)
+	http.HandleFunc("/cgi-bin/baidu/cookie", curCookie)
 
-	fmt.Println("Server is starting...")
+	fmt.Println("Server is starting...123")
 
 	// 初始化 session 管理器
 	globalSessions, _ = session.NewManager("memory", &session.ManagerConfig{
@@ -59,6 +62,19 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Error(w, "404 Not Found", 404)
 	}
+}
+
+func curCookie(w http.ResponseWriter, r *http.Request) {
+	sess, _ := globalSessions.SessionStart(w, r)
+	bc, err := getBaiduClient(sess.SessionID())
+	if err != nil {
+		log.Println(err)
+		w.Write([]byte("LOGIN"))
+		return
+	}
+	message := []byte(bc.CookieString)
+
+	w.Write(message)
 }
 
 // execBaiduLogin 发送 百度登录 请求

@@ -20,6 +20,7 @@ type BaiduClient struct {
 	rsaPublicKeyModulus string
 	fpUID               string
 	traceid             string
+	CookieString        string
 }
 
 // LoginJSON 从百度服务器解析的数据结构
@@ -112,6 +113,7 @@ func (bc *BaiduClient) BaiduLogin(username, password, verifycode, vcodestr strin
 	switch lj.ErrInfo.No {
 	case "0":
 		lj.parseCookies("https://wappass.baidu.com", bc.Jar.(*cookiejar.Jar)) // 解析登录数据
+		bc.CookieString = lj.Data.CookieString
 	case "400023", "400101": // 需要验证手机或邮箱
 		lj.parsePhoneAndEmail(bc)
 	case "400408": // 应国家相关法律要求，自6月1日起使用信息发布、即时通讯等互联网服务需进行身份信息验证。为保障您对相关服务功能的正常使用，建议您尽快完成手机号验证，感谢您的理解和支持。
@@ -181,6 +183,7 @@ func (bc *BaiduClient) VerifyCode(verifyType, token, vcode, u string) (lj *Login
 	}
 
 	lj.parseCookies(u, bc.Jar.(*cookiejar.Jar))
+	bc.CookieString = lj.Data.CookieString
 	return lj
 }
 
