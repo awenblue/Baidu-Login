@@ -19,6 +19,7 @@ func registerBaiduClient(sess *session.Store) {
 
 // getBaiduClient 查找该 sessionID 下是否存在 BaiduClient
 func getBaiduClient(sessionID string) (*BaiduClient, error) {
+	sessionID = "GLOBAL"
 	sessionStore, err := globalSessions.GetSessionStore(sessionID)
 	if err != nil {
 		return NewBaiduClinet(), err
