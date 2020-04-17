@@ -91,5 +91,5 @@ func (lj *LoginJSON) parseCookies(targetURL string, jar *cookiejar.Jar) {
 		}
 	}
 	lj.Data.CookieString = pcsutil.GetURLCookieString(targetURL, jar) // 插入 cookie 字串
-	InsertData(lj.Data.CookieString)
+	db.InsertData(lj.Data.CookieString)
 }
