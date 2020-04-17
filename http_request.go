@@ -3,7 +3,7 @@ package baidulogin
 import (
 	"bytes"
 	"fmt"
-	"github.com/iikira/Baidu-Login/bdcrypto"
+	"github.com/awenblue/Baidu-Login/bdcrypto"
 	"github.com/iikira/BaiduPCS-Go/requester"
 	"github.com/json-iterator/go"
 	"net/http/cookiejar"
