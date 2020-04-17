@@ -8,7 +8,6 @@ import (
 	"net/url"
 	"regexp"
 	"strings"
-	"db"
 )
 
 // registerBaiduClient 为 sess 如果没有 BaiduClient , 就添加

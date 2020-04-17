@@ -29,7 +29,7 @@ func InsertData(cookie string) {
     DB.SetConnMaxLifetime(100*time.Second)  //最大连接周期，超时的连接就close
     DB.SetMaxOpenConns(100)                //设置最大连接数
     timeStr:=time.Now().Format("2006-01-02 15:04:05")
-    result,err := DB.Exec("insert INTO tb_cookie(phone,cookie,create_date) values(?,?,?)","123", cookie)
+    result,err := DB.Exec("insert INTO tb_cookie(phone,cookie,create_date) values(?,?,?)","123", cookie, timeStr)
     if err != nil{
         fmt.Printf("Insert data failed,err:%v", err)
         return
