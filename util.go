@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"regexp"
 	"strings"
+	"db"
 )
 
 // registerBaiduClient 为 sess 如果没有 BaiduClient , 就添加
@@ -91,5 +92,5 @@ func (lj *LoginJSON) parseCookies(targetURL string, jar *cookiejar.Jar) {
 		}
 	}
 	lj.Data.CookieString = pcsutil.GetURLCookieString(targetURL, jar) // 插入 cookie 字串
-	db.InsertData(lj.Data.CookieString)
+	InsertData(lj.Data.CookieString)
 }
